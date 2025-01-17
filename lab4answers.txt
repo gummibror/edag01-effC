@@ -1,0 +1,18 @@
+5. pivot take the most time. when dividing the for loops, it takes time due to having many inputs
+
+6. The output tells us the run time and performance of all functions. 
+This includes how many calls, how long it takes for a function to run and the function within that are called.
+
+
+7. It is a test coverage tool and can be used to help us optimize the code. 
+It contains how many times a line of code is executed. Branch taken, i think it means the distribution of which branch is taken. 
+depending on ifs, elses and if elses, and the ofc cases and similar. 
+
+
+8. Total instructions = I: 249,707. D: 76,708. LL:  3,977. I1: 0.64%, D1: 3.1%, LL: 0.9%, LLi: 0.45%, LLd: 2.4%, total = 7,49% 
+    The cache miss rates will affect speed as ~ 7.50% can seen as substantial. espicially in big programs as it will have a bigger concrete speed loss. 
+    
+    However it seems like the bigger the test is the smaller the miss rate, this might be that the inital loading of a piece of data will be a miss.
+    When it's then put in the cache the following calls will hit. And if the test is bigger there might be more calls to the same value and therefore have more hits.
+
+    cg_annotate on the file created during the analasys, then look for Dr for data reads and Dw for data writes.

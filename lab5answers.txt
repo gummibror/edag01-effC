@@ -1,0 +1,46 @@
+9. lfdx is completed at cycle 49.  
+
+    Last is 613 or  707. vilken? Arvid tycker matten säger 613 men bägge tycker att mönstret säger 707. och väldigt mycket annat pekar på 707.
+
+
+ clockcycle 341 -> (341-49)/100 = cirka 3 (2.92)
+
+
+ 10.
+
+instruction 9 , cycle 43
+
+instruction 405, cycle 637
+
+(637- 43 ) / 100 = 5,94 
+
+5,94 cycles per iteration 
+
+
+the dependency of getting the last iteration done before the new can start. (cannot issue sources not ready yet)
+
+12.
+
+avoid div! 
+
+cannot issue source not ready yet
+
+cannot issue unit not free
+
+    
+
+13.
+renaming registers is to allow out of order execution and parallel execution. 
+when issuing a instruction the cpu picks a register from a pool of physical registers, avoiding the use of the same architectural register name when working in parallel.
+the instructions refer to these physical registers instead of the architectural ones, allowing multiple instructions that need the same architectural register to work without conflict.
+
+
+speculative need rename register. during speculative execution a value gets written to a register, then it can be renamed if its not needed.
+
+none speculative does not need it as they just work, business as usual. 
+
+
+
+R regx
+
+Str regx

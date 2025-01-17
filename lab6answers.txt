@@ -1,0 +1,178 @@
+4.
+T: Prints out the symbol values as the radix that is specified. Though it must be decimal (using d), octal (o), or hexadecimal (x). Command --radix=radix
+
+U: display only undefined symbols
+
+G/D: D displays the dynamic symbols rather than the normal symbols. this is only of use regarding dynamic objects such as some shared libraries.
+
+C:  Decodes low level symbol names into user-level names, makes function names more readable. 
+
+-os shows which file is the output is read from. if you read from multiple ones at the same time.0s
+-Os its a optimization option that reduces code size at the expense of longer compile time.
+
+
+5.
+Perm  Towers  Queens   Intmm      Mm  Puzzle   Quick  Bubble    Tree     FFT
+     131     251     573     430     577     724      29     233      46     162
+    Perm  Towers  Queens   Intmm      Mm  Puzzle   Quick  Bubble    Tree     FFT
+     367     787    1576     684     568    2057      77     615     106     898
+    Perm  Towers  Queens   Intmm      Mm  Puzzle   Quick  Bubble    Tree     FFT
+     127     238     414     431     576     464      29     243      50     181
+    Perm  Towers  Queens   Intmm      Mm  Puzzle   Quick  Bubble    Tree     FFT
+     131     199     456      86     106     536      25     237      43     174
+    Perm  Towers  Queens   Intmm      Mm  Puzzle   Quick  Bubble    Tree     FFT
+      96     181     436      42      32     552      25     238      40      87
+
+7.
+
+gcc -ftree-vectorize -O3 -mcpu=power8 mipsx.c tbr.s timebase.c
+
+stvx : 7
+vmaddfp : 0
+vperm : 0
+lvx : 10
+
+8.
+
+the effect is that it's quite a bit faster.
+the reason probably being the optimizations found by -fprofile-generate and applied by -fprofile-use. 
+examples of potential optimizations are inlining frequently called functions, unrolling heavily used loops, and reordering blocks of code to reduce branch mispredictions.
+
+without -flto:
+0000000000000680 <main>:
+ 680:   02 00 4c 3c     addis   r2,r12,2
+ 684:   80 78 42 38     addi    r2,r2,30848
+ 688:   a6 02 08 7c     mflr    r0
+ 68c:   f8 ff e1 fb     std     r31,-8(r1)
+ 690:   10 00 01 f8     std     r0,16(r1)
+ 694:   91 ff 21 f8     stdu    r1,-112(r1)
+ 698:   0d 00 80 38     li      r4,13
+ 69c:   0a 00 60 38     li      r3,10
+ 6a0:   e1 01 00 48     bl      880 <p0>
+ 6a4:   00 00 00 60     nop
+ 6a8:   fe ff 82 3c     addis   r4,r2,-2
+ 6ac:   00 8b 84 38     addi    r4,r4,-29952
+ 6b0:   78 1b 7f 7c     mr      r31,r3
+ 6b4:   01 00 60 38     li      r3,1
+ 6b8:   78 fb e5 7f     mr      r5,r31
+ 6bc:   85 ff ff 4b     bl      640 <0000004a.plt_call.__printf_chk@@GLIBC_2.17>
+ 6c0:   18 00 41 e8     ld      r2,24(r1)
+ 6c4:   70 00 21 38     addi    r1,r1,112
+ 6c8:   78 fb e3 7f     mr      r3,r31
+ 6cc:   10 00 01 e8     ld      r0,16(r1)
+ 6d0:   f8 ff e1 eb     ld      r31,-8(r1)
+ 6d4:   a6 03 08 7c     mtlr    r0
+ 6d8:   20 00 80 4e     blr
+ 6dc:   00 00 00 00     .long 0x0
+ 6e0:   00 00 00 01     .long 0x1000000
+ 6e4:   80 01 00 00     .long 0x180
+
+whit -flto:
+
+0000000000000680 <main>:
+ 680:   02 00 4c 3c     addis   r2,r12,2
+ 684:   80 78 42 38     addi    r2,r2,30848
+ 688:   a6 02 08 7c     mflr    r0
+ 68c:   10 00 01 f8     std     r0,16(r1)
+ 690:   a1 ff 21 f8     stdu    r1,-96(r1)
+ 694:   17 00 a0 38     li      r5,23
+ 698:   fe ff 82 3c     addis   r4,r2,-2
+ 69c:   01 00 60 38     li      r3,1
+ 6a0:   c0 8a 84 38     addi    r4,r4,-30016
+ 6a4:   7d ff ff 4b     bl      620 <0000011f.plt_call.__printf_chk@@GLIBC_2.17>
+ 6a8:   18 00 41 e8     ld      r2,24(r1)
+ 6ac:   60 00 21 38     addi    r1,r1,96
+ 6b0:   17 00 60 38     li      r3,23
+ 6b4:   10 00 01 e8     ld      r0,16(r1)
+ 6b8:   a6 03 08 7c     mtlr    r0
+ 6bc:   20 00 80 4e     blr
+ 6c0:   00 00 00 00     .long 0x0
+ 6c4:   00 00 00 01     .long 0x1000000
+ 6c8:   80 00 00 00     .long 0x80
+
+
+
+ 0000000000000680 <main>:
+ 680:   02 00 4c 3c     addis   r2,r12,2
+ 684:   80 78 42 38     addi    r2,r2,30848
+ 688:   a6 02 08 7c     mflr    r0
+ 68c:   f8 ff e1 fb     std     r31,-8(r1)
+ 690:   10 00 01 f8     std     r0,16(r1)
+ 694:   91 ff 21 f8     stdu    r1,-112(r1)
+ 698:   0d 00 80 38     li      r4,13
+ 69c:   0a 00 60 38     li      r3,10
+ 6a0:   e1 01 00 48     bl      880 <p0>
+ 6a4:   00 00 00 60     nop
+ 6a8:   fe ff 82 3c     addis   r4,r2,-2
+ 6ac:   00 8b 84 38     addi    r4,r4,-29952
+ 6b0:   78 1b 7f 7c     mr      r31,r3
+ 6b4:   01 00 60 38     li      r3,1
+ 6b8:   78 fb e5 7f     mr      r5,r31
+ 6bc:   85 ff ff 4b     bl      640 <0000004a.plt_call.__printf_chk@@GLIBC_2.17>
+ 6c0:   18 00 41 e8     ld      r2,24(r1)
+ 6c4:   70 00 21 38     addi    r1,r1,112
+ 6c8:   78 fb e3 7f     mr      r3,r31
+ 6cc:   10 00 01 e8     ld      r0,16(r1)
+ 6d0:   f8 ff e1 eb     ld      r31,-8(r1)
+ 6d4:   a6 03 08 7c     mtlr    r0
+ 6d8:   20 00 80 4e     blr
+ 6dc:   00 00 00 00     .long 0x0
+ 6e0:   00 00 00 01     .long 0x1000000
+ 6e4:   80 01 00 00     .long 0x180
+
+ 0000000000000680 <main>:
+ 680:   02 00 4c 3c     addis   r2,r12,2
+ 684:   80 78 42 38     addi    r2,r2,30848
+ 688:   a6 02 08 7c     mflr    r0
+ 68c:   f8 ff e1 fb     std     r31,-8(r1)
+ 690:   10 00 01 f8     std     r0,16(r1)
+ 694:   91 ff 21 f8     stdu    r1,-112(r1)
+ 698:   0d 00 80 38     li      r4,13
+ 69c:   0a 00 60 38     li      r3,10
+ 6a0:   e1 01 00 48     bl      880 <p0>
+ 6a4:   00 00 00 60     nop
+ 6a8:   fe ff 82 3c     addis   r4,r2,-2
+ 6ac:   00 8b 84 38     addi    r4,r4,-29952
+ 6b0:   78 1b 7f 7c     mr      r31,r3
+ 6b4:   01 00 60 38     li      r3,1
+ 6b8:   78 fb e5 7f     mr      r5,r31
+ 6bc:   85 ff ff 4b     bl      640 <0000004a.plt_call.__printf_chk@@GLIBC_2.17>
+ 6c0:   18 00 41 e8     ld      r2,24(r1)
+ 6c4:   70 00 21 38     addi    r1,r1,112
+ 6c8:   78 fb e3 7f     mr      r3,r31
+ 6cc:   10 00 01 e8     ld      r0,16(r1)
+ 6d0:   f8 ff e1 eb     ld      r31,-8(r1)
+ 6d4:   a6 03 08 7c     mtlr    r0
+ 6d8:   20 00 80 4e     blr
+ 6dc:   00 00 00 00     .long 0x0
+ 6e0:   00 00 00 01     .long 0x1000000
+ 6e4:   80 01 00 00     .long 0x180
+
+
+
+9.
+
+clang clang-matmul: 
+real	0m0.035s
+user	0m0.035s
+sys	0m0.000s
+
+clang matmul:
+real	0m0.221s
+user	0m0.221s
+sys	0m0.000s
+
+gcc matmul: 
+real	0m0.092s
+user	0m0.092s
+sys	0m0.000s
+  
+xlc/ibm matmul:
+real	0m0.039s
+user	0m0.039s
+sys	0m0.000s
+
+pgcc/nvidia matmul:
+real	0m0.095s
+user	0m0.095s
+sys	0m0.000s
